@@ -5,7 +5,7 @@ import (
 	"unsafe"
 )
 
-type controller interface {
+type controller interface { // interface内でメソッドの一覧を定義
 	speedUp() int
 	speedDown() int
 }
@@ -18,7 +18,7 @@ type bycycle struct {
 	humanPower int
 }
 
-func (v *vehicle) speedUp() int {
+func (v *vehicle) speedUp() int { // ポインタレシーバで定義
 	v.speed += 10 * v.enginePower
 	return v.speed
 }
@@ -34,7 +34,7 @@ func (b *bycycle) speedDown() int {
 	b.speed -= 1 * b.humanPower
 	return b.speed
 }
-func speedUpAndDown(c controller) {
+func speedUpAndDown(c controller) { // controllerのinterfaceを受け取れるようにしている
 	fmt.Printf("current speed: %v\n", c.speedUp())
 	fmt.Printf("current speed: %v\n", c.speedDown())
 }
@@ -50,7 +50,7 @@ func main() {
 	fmt.Println(v)
 
 	var i1 interface{}
-	var i2 any
+	var i2 any // 全ての型を取れる
 	fmt.Printf("%[1]v %[1]T %v\n", i1, unsafe.Sizeof(i1))
 	fmt.Printf("%[1]v %[1]T %v\n", i2, unsafe.Sizeof(i2))
 	checkType(i2)
@@ -61,7 +61,7 @@ func main() {
 
 }
 func checkType(i any) {
-	switch i.(type) {
+	switch i.(type) { // 引数iの型を取得
 	case nil:
 		fmt.Println("nil")
 	case int:
