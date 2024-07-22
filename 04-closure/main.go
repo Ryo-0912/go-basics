@@ -30,12 +30,12 @@ func fileChecker(name string) (string, error) {
 func addExt(f func(file string) string, name string) {
 	fmt.Println(f(name))
 }
-func multiply() func(int) int {
+func multiply() func(int) int { //無名関数をreturnで返す 
 	return func(n int) int {
 		return n * 1000
 	}
 }
-func countUp() func(int) int {
+func countUp() func(int) int { //無名関数をreturnで返す
 	count := 0
 	return func(n int) int {
 		count += n
@@ -57,10 +57,10 @@ func main() {
 	fmt.Println(name)
 
 	i := 1
-	func(i int) {
+	func(i int) {         //無名関数
 		fmt.Println(i)
 	}(i)
-	f1 := func(i int) int {
+	f1 := func(i int) int { // 無名関数代入
 		return i + 1
 	}
 	fmt.Println(f1(i))
@@ -70,10 +70,10 @@ func main() {
 	}
 	addExt(f2, "file1")
 
-	f3 := multiply()
+	f3 := multiply() // f3は無名関数が返ってくる
 	fmt.Println(f3(2))
 
-	f4 := countUp()
+	f4 := countUp() // f4は無名関数が返ってくる
 	for i := 1; i <= 5; i++ {
 		v := f4(2)
 		fmt.Printf("%v\n", v)
