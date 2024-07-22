@@ -9,7 +9,7 @@ import (
 var ErrCustom = errors.New("not found")
 
 func main() {
-	err01 := errors.New("something wrong")
+	err01 := errors.New("something wrong") // 標準パッケージ　引数にエラーメッセージ指定できる
 	err02 := errors.New("something wrong")
 	fmt.Printf("%[1]p %[1]T %[1]v\n", err01)
 	fmt.Println(err01)
@@ -29,7 +29,7 @@ func main() {
 	err2 = fmt.Errorf("in service layer: %w", err2)
 	fmt.Println(err2)
 
-	if errors.Is(err2, ErrCustom) {
+	if errors.Is(err2, ErrCustom) { //第一引数 ラップされているエラー、第二引数 比較対象エラー
 		fmt.Println("matched")
 	}
 
