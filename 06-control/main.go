@@ -39,19 +39,19 @@ loop:
 		case 3:
 			continue
 		case 8:
-			break loop
+			break loop //breakのみだとswitch文しか抜けれない
 		default:
 			fmt.Printf("%v ", i)
 		}
 	}
 	fmt.Printf("\n")
 
-	items := []item{
+	items := []item{ //スライス定義
 		{price: 10.},
 		{price: 20.},
 		{price: 30.},
 	}
-	for _, i := range items {
+	for _, i := range items { //構造体のコピーが生成されているので、値に変化なし
 		i.price *= 1.1
 	}
 	fmt.Printf("%+v\n", items)
