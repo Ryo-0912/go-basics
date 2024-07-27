@@ -7,11 +7,12 @@ import (
 )
 
 type customConstraints interface {
-	~int | int16 | float32 | float64 | string
+	~int | int16 | float32 | float64 | string // Tが取れる型の種類
+	// ~をつけることでNewIntが使えるようになる
 }
-type NewInt int
+type NewInt int // 独自の型
 
-func add[T customConstraints](x, y T) T {
+func add[T customConstraints](x, y T) T { // 引数の型が同じ場合、一つ指定でOK
 	return x + y
 }
 func min[T constraints.Ordered](x, y T) T {
