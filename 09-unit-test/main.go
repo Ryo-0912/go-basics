@@ -2,6 +2,12 @@ package main
 
 import "fmt"
 
+// 実行コマンド
+// go test -v .
+// go test -v -cover -coverprofile=coverag
+//e.out .
+// go tool cover -html=coverage.out
+
 func Add(x, y int) int {
 	return x + y
 }
