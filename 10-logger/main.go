@@ -21,3 +21,4 @@ func main() {
 
 	errorLogger.Fatalln("critical error") // エラーログ書き込んだ上でプログラム強制終了
 }
+
