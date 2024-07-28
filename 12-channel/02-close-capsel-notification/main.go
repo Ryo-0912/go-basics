@@ -16,6 +16,7 @@ func main() {
 	}()
 	ch1 <- 10
 	close(ch1)
+	// 第二引数okでchannelが開いているか閉じているかを確認できる
 	v, ok := <-ch1
 	fmt.Printf("%v %v\n", v, ok)
 	wg.Wait()
@@ -28,6 +29,7 @@ func main() {
 	fmt.Printf("%v %v\n", v, ok)
 	v, ok = <-ch2
 	fmt.Printf("%v %v\n", v, ok)
+	// バッっファの値が全て読み込まれている
 	v, ok = <-ch2
 	fmt.Printf("%v %v\n", v, ok)
 
@@ -36,7 +38,7 @@ func main() {
 		fmt.Println(v)
 	}
 
-	nCh := make(chan struct{})
+	nCh := make(chan struct{}) // 空の構造体は0バイトしか消費しない
 	for i := 0; i < 5; i++ {
 		wg.Add(1)
 		go func(i int) {
@@ -47,13 +49,14 @@ func main() {
 		}(i)
 	}
 	time.Sleep(2 * time.Second)
+	// channelがクローズされると、受信待ちのブロッキングが一斉に解除され、残りの処理を進める
 	close(nCh)
 	fmt.Println("unblocked by manual close")
 
 	wg.Wait()
 	fmt.Println("finish")
 }
-func generateCountStream() <-chan int {
+func generateCountStream() <-chan int { // <-chan intとすることで戻り値が読み込み専用の値となる
 	ch := make(chan int)
 	go func() {
 		defer close(ch)
