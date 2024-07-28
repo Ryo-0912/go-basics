@@ -1,5 +1,8 @@
 package main
 
+// 実行コマンド
+// go tool trace trace.out
+
 import (
 	"context"
 	"fmt"
@@ -15,11 +18,11 @@ func main() {
 	// var wg sync.WaitGroup
 	// wg.Add(1)
 	// go func() {
-	// 	defer wg.Done()
+	// 	defer wg.Done() //ゴルーチン終了合図
 	// 	fmt.Println("goroutine invoked")
 	// }()
-	// wg.Wait()
-	// fmt.Printf("num of working goroutines: %d\n", runtime.NumGoroutine())
+	// wg.Wait() // ゴルーチン終了するのを待つ
+	// fmt.Printf("num of working goroutines: %d\n", runtime.NumGoroutine()) 起動しているゴルーチンの数を取得
 	// fmt.Println("main func finish")
 	f, err := os.Create("trace.out")
 	if err != nil {
@@ -43,7 +46,7 @@ func main() {
 	// task(ctx, "Task3")
 	var wg sync.WaitGroup
 	wg.Add(3)
-	go cTask(ctx, &wg, "Task1")
+	go cTask(ctx, &wg, "Task1") // 先頭にgoを記載することで、ゴルーチンとして認識させることができる
 	go cTask(ctx, &wg, "Task2")
 	go cTask(ctx, &wg, "Task3")
 	wg.Wait()
@@ -65,7 +68,7 @@ func task(ctx context.Context, name string) {
 	fmt.Println(name)
 }
 func cTask(ctx context.Context, wg *sync.WaitGroup, name string) {
-	defer trace.StartRegion(ctx, name).End()
+	defer trace.StartRegion(ctx, name).End() // チェーンしている時は最後のメソッドのみ遅延する
 	defer wg.Done()
 	time.Sleep(time.Second)
 	fmt.Println(name)
